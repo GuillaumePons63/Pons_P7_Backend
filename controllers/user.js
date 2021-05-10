@@ -21,3 +21,33 @@ exports.createUser = (req, res, next) => {
     })
     .catch((error) => res.status(400).json({ error }));
 };
+
+exports.connectUser = (req, res, next) => {
+  let mail = HmacSHA256(req.body.email, "1234").toString();
+  User.findOne({
+    where: {
+      email: mail,
+    },
+  })
+    .then((user) => {
+      if (!user) {
+        return res.status(401).json({ error });
+      }
+
+      bcrypt
+        .compare(req.body.password, user.password)
+        .then((valid) => {
+          if (!valid) {
+            return res.status(401).json({ error });
+          }
+          res.status(200).json({
+            id: user.id,
+            token: jwt.sign({ id: user.id }, "1234", {
+              expiresIn: "24h",
+            }),
+          });
+        })
+        .catch((error) => res.status(500).json({ error }));
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
