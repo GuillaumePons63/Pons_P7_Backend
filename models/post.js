@@ -6,6 +6,10 @@ const sequelize = new Sequelize("Groupomania", "root", "Alphonse42", {
 });
 
 const post = sequelize.define("Post", {
+  title: {
+    type: DataTypes.TEXT("tiny"),
+    allowNull: false,
+  },
   post: {
     type: DataTypes.TEXT,
   },
