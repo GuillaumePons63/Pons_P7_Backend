@@ -1,14 +1,10 @@
 const express = require("express");
-const { Sequelize, DataTypes } = require("sequelize");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 
 const app = express();
 
-const sequelize = new Sequelize("Groupomania", "root", "Alphonse42", {
-  dialect: "mysql",
-  host: "localhost",
-});
+const sequelize = require("./config/sequelize");
 
 try {
   sequelize.authenticate();

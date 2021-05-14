@@ -1,8 +1,5 @@
-const { Sequelize, DataTypes } = require("sequelize");
-const sequelize = new Sequelize("Groupomania", "root", "Alphonse42", {
-  dialect: "mysql",
-  host: "localhost",
-});
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/sequelize");
 
 const user = sequelize.define("User", {
   email: {

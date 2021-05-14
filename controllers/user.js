@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const HmacSHA256 = require("crypto-js/hmac-sha256");
 
 exports.createUser = (req, res, next) => {
-  let mail = HmacSHA256(req.body.email, "1234").toString();
+  let mail = HmacSHA256(req.body.email, process.env.hmacKey).toString();
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {
@@ -23,7 +23,7 @@ exports.createUser = (req, res, next) => {
 };
 
 exports.connectUser = (req, res, next) => {
-  let mail = HmacSHA256(req.body.email, "1234").toString();
+  let mail = HmacSHA256(req.body.email, process.env.hmacKey).toString();
   User.findOne({
     where: {
       email: mail,
@@ -42,7 +42,7 @@ exports.connectUser = (req, res, next) => {
           }
           res.status(200).json({
             id: user.id,
-            token: jwt.sign({ id: user.id }, "1234", {
+            token: jwt.sign({ id: user.id }, process.env.tokenKey, {
               expiresIn: "24h",
             }),
           });
