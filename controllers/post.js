@@ -1,4 +1,6 @@
+const { Sequelize } = require("sequelize");
 const Post = require("../models/post");
+const User = require("../models/user");
 
 exports.createPost = (req, res, next) => {
   Post.create({
@@ -11,7 +13,9 @@ exports.createPost = (req, res, next) => {
 };
 
 exports.getAllPost = (req, res, next) => {
-  Post.findAll()
+  Post.findAll({
+    include: User,
+  })
     .then((posts) => res.status(200).json(posts))
     .catch((error) => res.status(400).json({ error }));
 };
