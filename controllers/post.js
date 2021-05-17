@@ -20,6 +20,7 @@ exports.getAllPost = (req, res, next) => {
         attributes: ["firstName", "lastName"],
       },
     ],
+    order: [["createdAt", "DESC"]],
   })
     .then((posts) => res.status(200).json(posts))
     .catch((error) => res.status(400).json({ error }));
