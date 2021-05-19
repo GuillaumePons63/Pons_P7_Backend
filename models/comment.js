@@ -10,10 +10,6 @@ const comment = sequelize.define("Comment", {
   },
 });
 
-user.hasMany(comment, {
-  foreignKey: { allowNull: false },
-  onDelete: "CASCADE",
-});
 post.hasMany(comment, {
   foreignKey: { allowNull: false },
   onDelete: "CASCADE",

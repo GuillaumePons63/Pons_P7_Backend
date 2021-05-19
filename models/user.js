@@ -1,5 +1,7 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/sequelize");
+const comment = require("./comment");
+const post = require("./post");
 
 const user = sequelize.define("User", {
   email: {
@@ -28,6 +30,13 @@ const user = sequelize.define("User", {
     defaultValue: "0",
   },
 });
+
+comment.belongsTo(user, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
+});
+
+post.belongsTo(user);
 
 user
   .sync()

@@ -12,8 +12,6 @@ const post = sequelize.define("Post", {
   },
 });
 
-post.belongsTo(user, { foreignKey: { allowNull: false }, onDelete: "CASCADE" });
-
 post
   .sync()
   .then(() => console.log("Post créées"))

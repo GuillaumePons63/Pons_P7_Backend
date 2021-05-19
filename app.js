@@ -32,6 +32,6 @@ app.use(express.json());
 
 app.use("/api/auth", userRoutes);
 app.use("/api/post", postRoutes);
-app.use("/api", commentRoutes);
+app.use("/api/post", commentRoutes);
 
 module.exports = app;
