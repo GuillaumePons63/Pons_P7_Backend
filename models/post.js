@@ -1,28 +1,22 @@
-const user = require("./user");
-const sequelize = require("../config/sequelize");
 const { DataTypes } = require("sequelize");
+const sequelize = require("../config/sequelize");
+const User = require("./user");
 
-const post = sequelize.define("Post", {
+const Post = sequelize.define("post", {
   title: {
-    type: DataTypes.TEXT("tiny"),
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   post: {
-    type: DataTypes.TEXT(),
+    type: DataTypes.TEXT,
   },
   imageUrl: {
-    type: DataTypes.TEXT("tiny"),
+    type: DataTypes.STRING,
   },
 });
 
-user.hasMany(post, {
-  foreignKey: { allowNull: false },
-  onDelete: "CASCADE",
-});
-
-post
-  .sync()
+Post.sync()
   .then(() => console.log("Post créées"))
   .catch((error) => console.log(error));
 
-module.exports = post;
+module.exports = Post;

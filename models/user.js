@@ -1,7 +1,8 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/sequelize");
+const Post = require("./post");
 
-const user = sequelize.define("User", {
+const User = sequelize.define("user", {
   email: {
     type: DataTypes.STRING,
     unique: true,
@@ -29,9 +30,12 @@ const user = sequelize.define("User", {
   },
 });
 
-user
-  .sync()
+Post.belongsTo(User);
+
+User.hasMany(Post);
+
+User.sync()
   .then(() => console.log("Utilisateurs créées"))
   .catch((error) => console.log(error));
 
-module.exports = user;
+module.exports = User;

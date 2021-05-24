@@ -1,28 +1,17 @@
-const post = require("./post");
-const user = require("./user");
+const Post = require("./post");
+const User = require("./user");
 const sequelize = require("../config/sequelize");
 const { DataTypes } = require("sequelize");
 
-const comment = sequelize.define("Comment", {
+const Comment = sequelize.define("comment", {
   comment: {
     type: DataTypes.TEXT(),
     allowNull: false,
   },
 });
 
-post.hasMany(comment, {
-  foreignKey: { allowNull: false },
-  onDelete: "CASCADE",
-});
-
-user.hasMany(comment, {
-  foreignKey: { allowNull: false },
-  onDelete: "CASCADE",
-});
-
-comment
-  .sync()
+Comment.sync()
   .then(() => console.log("Comment créées"))
   .catch((error) => console.log(error));
 
-module.exports = comment;
+module.exports = Comment;
