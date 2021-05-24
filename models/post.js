@@ -8,11 +8,16 @@ const post = sequelize.define("Post", {
     allowNull: false,
   },
   post: {
-    type: DataTypes.TEXT,
+    type: DataTypes.TEXT(),
   },
   imageUrl: {
     type: DataTypes.TEXT("tiny"),
   },
+});
+
+user.hasMany(post, {
+  foreignKey: { allowNull: false },
+  onDelete: "CASCADE",
 });
 
 post
