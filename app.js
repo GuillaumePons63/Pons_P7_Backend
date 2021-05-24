@@ -2,18 +2,21 @@ const express = require("express");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const commentRoutes = require("./routes/comment");
+const path = require("path");
+const mysql = require("mysql2/promise");
 
 const app = express();
 
-const sequelize = require("./config/sequelize");
-
-try {
-  sequelize.authenticate();
-  console.log("Connecté à la base de données MySQL!");
-  sequelize.query("CREATE DATABASE IF NOT EXISTS `Groupomania` ;");
-} catch (error) {
-  console.error("Impossible de se connecter, erreur suivante :", error);
-}
+mysql
+  .createConnection({
+    user: process.env.userDb,
+    password: process.env.passwordDb,
+  })
+  .then((connection) => {
+    connection.query("CREATE DATABASE IF NOT EXISTS groupomania;").then(() => {
+      console.log("groupomania créé !");
+    });
+  });
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -28,6 +31,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(express.json());
 
 app.use("/api/auth", userRoutes);

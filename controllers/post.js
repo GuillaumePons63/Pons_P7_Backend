@@ -3,10 +3,14 @@ const Post = require("../models/post");
 const User = require("../models/user");
 
 exports.createPost = (req, res, next) => {
+  post = JSON.parse(req.body.body);
   Post.create({
-    post: req.body.post,
+    post: post.post,
     UserId: req.body.userIdFromToken,
-    title: req.body.title,
+    title: post.title,
+    imageUrl: `${req.protocol}://${req.get("host")}/images/${
+      req.files[0].filename
+    }`,
   })
     .then(() => res.status(201).json({ message: "post crée" }))
     .catch((error) => res.status(400).json({ error }));

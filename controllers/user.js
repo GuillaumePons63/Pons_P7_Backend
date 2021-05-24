@@ -33,7 +33,6 @@ exports.connectUser = (req, res, next) => {
       if (!user) {
         return res.status(401).json({ error });
       }
-
       bcrypt
         .compare(req.body.password, user.password)
         .then((valid) => {

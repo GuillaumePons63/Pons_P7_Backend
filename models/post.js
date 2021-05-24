@@ -10,6 +10,9 @@ const post = sequelize.define("Post", {
   post: {
     type: DataTypes.TEXT,
   },
+  imageUrl: {
+    type: DataTypes.TEXT("tiny"),
+  },
 });
 
 post
