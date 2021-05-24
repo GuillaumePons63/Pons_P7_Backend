@@ -1,37 +1,40 @@
 const { Sequelize } = require("sequelize");
-const Post = require("../models/post");
-const User = require("../models/user");
+const post = require("../models/post");
+const user = require("../models/user");
 
 exports.createPost = (req, res, next) => {
-  post = JSON.parse(req.body.body);
-  Post.create({
-    post: post.post,
-    UserId: req.body.userIdFromToken,
-    title: post.title,
-    imageUrl: `${req.protocol}://${req.get("host")}/images/${
-      req.files[0].filename
-    }`,
-  })
+  const postObject = JSON.parse(req.body.body);
+  post
+    .create({
+      post: postObject.post,
+      UserId: userIdFromToken,
+      title: postObject.title,
+      imageUrl: `${req.protocol}://${req.get("host")}/images/${
+        req.files[0].filename
+      }`,
+    })
     .then(() => res.status(201).json({ message: "post crée" }))
     .catch((error) => res.status(400).json({ error }));
 };
 
 exports.getAllPost = (req, res, next) => {
-  Post.findAll({
-    include: [
-      {
-        model: User,
-        attributes: ["firstName", "lastName"],
-      },
-    ],
-    order: [["createdAt", "DESC"]],
-  })
+  post
+    .findAll({
+      include: [
+        {
+          model: user,
+          attributes: ["firstName", "lastName"],
+        },
+      ],
+      order: [["createdAt", "DESC"]],
+    })
     .then((posts) => res.status(200).json(posts))
     .catch((error) => res.status(400).json({ error }));
 };
 
 exports.getOnePost = (req, res, next) => {
-  Post.findByPk(req.params.id)
+  post
+    .findByPk(req.params.id)
     .then((post) => res.status(200).json(post))
     .catch((error) => res.status(404).json({ error }));
 };

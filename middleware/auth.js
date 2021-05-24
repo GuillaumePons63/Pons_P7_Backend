@@ -10,7 +10,7 @@ module.exports = (req, res, next) => {
       throw "Invalid user ID";
     } else {
       // Déclaration de userIdFromToken qui est utilisé dans le middleware owner
-      req.body.userIdFromToken = userId;
+      userIdFromToken = userId;
       next();
     }
   } catch (error) {
