@@ -6,7 +6,7 @@ const Comment = require("../models/comment");
 exports.createComment = (req, res, next) => {
   Comment.create({
     comment: req.body.comment,
-    UserId: req.body.userIdFromToken,
+    UserId: userIdFromToken,
     PostId: req.params.id,
   })
     .then(() => res.status(201).json({ message: "commentaire crée" }))
@@ -24,7 +24,7 @@ exports.getComment = (req, res, next) => {
         attributes: ["firstName", "lastName"],
       },
     ],
-    //order: ["createdAt", "DESC"],
+    order: [["createdAt", "DESC"]],
   })
     .then((post) => res.status(200).json(post))
     .catch((error) => res.status(400).json({ error }));

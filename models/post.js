@@ -13,6 +13,10 @@ const Post = sequelize.define("post", {
   imageUrl: {
     type: DataTypes.STRING,
   },
+  UserId: {
+    type: DataTypes.INTEGER,
+    defaultValue: null,
+  },
 });
 
 Post.sync()

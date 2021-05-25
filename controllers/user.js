@@ -15,6 +15,7 @@ exports.createUser = (req, res, next) => {
         lastName: req.body.lastName,
         job: req.body.job,
         isAdmin: req.body.isAdmin,
+        UserId: userIdFromToken,
       })
         .then(() => res.status(201).json({ message: "utilisateur crée" }))
         .catch((error) => res.status(400).json({ error }));
