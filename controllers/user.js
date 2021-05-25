@@ -41,7 +41,7 @@ exports.connectUser = (req, res, next) => {
             return res.status(401).json({ error });
           }
           res.status(200).json({
-            id: user.id,
+            userId: user.id,
             token: jwt.sign({ id: user.id }, process.env.tokenKey, {
               expiresIn: "24h",
             }),

@@ -1,8 +1,12 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../config/sequelize");
-const User = require("./user");
 
 const Post = sequelize.define("post", {
+  id: {
+    type: DataTypes.INTEGER.UNSIGNED,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   title: {
     type: DataTypes.TEXT,
     allowNull: false,

@@ -36,3 +36,13 @@ exports.getOnePost = (req, res, next) => {
     .then((post) => res.status(200).json(post))
     .catch((error) => res.status(404).json({ error }));
 };
+
+exports.deletePost = (req, res, next) => {
+  Post.destroy({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then(() => res.status(201).json({ message: "post supprimé" }))
+    .catch((error) => res.status(500).json({ error }));
+};
