@@ -6,11 +6,13 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1];
     const decodedToken = jwt.verify(token, process.env.tokenKey);
     const userId = decodedToken.id;
+
     if (req.body.userId && req.body.userId !== userId) {
       throw "Invalid user ID";
     } else {
       // Déclaration de userIdFromToken qui est utilisé dans le middleware owner
       userIdFromToken = userId;
+
       next();
     }
   } catch (error) {
