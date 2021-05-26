@@ -2,7 +2,7 @@
 const Comment = require("../models/comment");
 
 module.exports = (req, res, next) => {
-  Comment.findAll({
+  Comment.findOne({
     where: { id: req.params.id },
   })
     .then((comment) => {

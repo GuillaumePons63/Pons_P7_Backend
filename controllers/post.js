@@ -1,6 +1,7 @@
 const { Sequelize } = require("sequelize");
 const Post = require("../models/post");
 const User = require("../models/user");
+const fs = require("fs");
 
 exports.createPost = (req, res, next) => {
   const postObject = JSON.parse(req.body.body);
@@ -38,11 +39,23 @@ exports.getOnePost = (req, res, next) => {
 };
 
 exports.deletePost = (req, res, next) => {
-  Post.destroy({
+  Post.findOne({
     where: {
       id: req.params.id,
     },
   })
-    .then(() => res.status(201).json({ message: "post supprimé" }))
+    .then((post) => {
+      const filename = post.imageUrl.split("/images/")[1];
+      fs.unlink(`images/${filename}`, () => {
+        Post.destroy({
+          where: {
+            id: req.params.id,
+          },
+        })
+          .then(() => res.status(201).json({ message: "post supprimé" }))
+          .catch((error) => res.status(500).json({ error }));
+      });
+    })
+    .catch((error) => res.status(500).json({ error }))
     .catch((error) => res.status(500).json({ error }));
 };
