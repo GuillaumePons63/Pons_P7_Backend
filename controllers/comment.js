@@ -6,8 +6,8 @@ const Comment = require("../models/comment");
 exports.createComment = (req, res, next) => {
   Comment.create({
     comment: req.body.comment,
-    UserId: userIdFromToken,
-    PostId: req.params.id,
+    userId: userIdFromToken,
+    postId: req.params.id,
   })
     .then(() => res.status(201).json({ message: "commentaire crée" }))
     .catch((error) => res.status(400).json({ error }));
@@ -27,5 +27,31 @@ exports.getComment = (req, res, next) => {
     order: [["createdAt", "DESC"]],
   })
     .then((post) => res.status(200).json(post))
+    .catch((error) => res.status(400).json({ error }));
+};
+
+exports.deleteComment = (req, res, next) => {
+  Comment.findOne({
+    where: {
+      id: req.params.id,
+    },
+  })
+    .then(() => res.status(201).json({ message: "post supprimé" }))
+    .catch((error) => res.status(500).json({ error }));
+};
+
+exports.modifyComment = (req, res, next) => {
+  Comment.update(
+    {
+      comment: req.body.comment,
+      title: red.body.title,
+    },
+    {
+      where: {
+        id: req.params.id,
+      },
+    }
+  )
+    .then(() => res.status(200).json({ message: "Comment modifié !" }))
     .catch((error) => res.status(400).json({ error }));
 };

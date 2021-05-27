@@ -9,13 +9,15 @@ const Post = sequelize.define("post", {
   },
   title: {
     type: DataTypes.TEXT,
-    allowNull: false,
   },
   post: {
     type: DataTypes.TEXT,
   },
   imageUrl: {
     type: DataTypes.STRING,
+  },
+  altText: {
+    type: DataTypes.TEXT("tiny"),
   },
   UserId: {
     type: DataTypes.INTEGER,

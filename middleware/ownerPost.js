@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
   })
     .then((post) => {
       // userIdFromToken est créé dans le middleware auth
-      if (userIdFromToken === post.UserId) {
+      if (userIdFromToken === post.userId) {
         next();
       } else {
         res.status(401).json({ error });

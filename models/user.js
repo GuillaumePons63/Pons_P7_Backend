@@ -32,7 +32,7 @@ const User = sequelize.define("user", {
 
 Post.belongsTo(User);
 
-User.hasMany(Post);
+User.hasMany(Post, { onDelete: "cascade" });
 
 User.sync()
   .then(() => console.log("Utilisateurs créées"))

@@ -32,12 +32,6 @@ exports.getAllPost = (req, res, next) => {
     .catch((error) => res.status(400).json({ error }));
 };
 
-exports.getOnePost = (req, res, next) => {
-  Post.findByPk(req.params.id)
-    .then((post) => res.status(200).json(post))
-    .catch((error) => res.status(404).json({ error }));
-};
-
 exports.deletePost = (req, res, next) => {
   Post.findOne({
     where: {
@@ -61,9 +55,27 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
+  const postObject = JSON.parse(req.body.body);
+  Post.findOne({
+    where: {
+      id: req.params.id,
+    },
+  }).then((post) => {
+    const filenameOld = post.imageUrl.split("/images/")[1];
+    fs.unlink(`images/${filenameOld}`, (error) => {
+      if (error) {
+        res.status(400).json({ error });
+      }
+    });
+  });
   Post.update(
     {
-      title: req.body.title,
+      title: postObject.title,
+      post: postObject.post,
+      imageUrl: `${req.protocol}://${req.get("host")}/images/${
+        req.files[0].filename
+      }`,
+      altText: postObject.alText,
     },
     {
       where: {
