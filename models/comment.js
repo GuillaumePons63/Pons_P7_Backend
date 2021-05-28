@@ -1,7 +1,7 @@
-const Post = require("./post");
 const User = require("./user");
 const sequelize = require("../config/sequelize");
 const { DataTypes } = require("sequelize");
+const Post = require("./post");
 
 const Comment = sequelize.define("comment", {
   comment: {
@@ -18,8 +18,8 @@ Post.hasMany(Comment, { onDelete: "cascade" });
 
 Comment.belongsTo(Post);
 
-Comment.sync()
-  .then(() => console.log("Comment créées"))
-  .catch((error) => console.log(error));
+// Comment.sync()
+//   .then(() => console.log("Comment créées"))
+//   .catch((error) => console.log(error));
 
 module.exports = Comment;

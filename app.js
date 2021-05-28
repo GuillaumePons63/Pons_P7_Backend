@@ -1,8 +1,5 @@
 const express = require("express");
-const userRoutes = require("./routes/user");
-const postRoutes = require("./routes/post");
-const commentRoutes = require("./routes/comment");
-const path = require("path");
+
 const mysql = require("mysql2/promise");
 
 const app = express();
@@ -13,10 +10,28 @@ mysql
     password: process.env.passwordDb,
   })
   .then((connection) => {
-    connection.query("CREATE DATABASE IF NOT EXISTS groupomania;").then(() => {
-      console.log("groupomania créé !");
-    });
+    connection
+      .query("CREATE DATABASE IF NOT EXISTS groupomania;")
+      .then(() => {
+        const User = require("./models/user");
+        const Post = require("./models/post");
+        const Comment = require("./models/comment");
+        try {
+          User.sync();
+          Post.sync();
+          Comment.sync();
+        } catch {
+          throw error;
+        }
+      })
+      .catch((error) => console.log({ message: "erreur base de données" }));
   });
+
+const userRoutes = require("./routes/user");
+const postRoutes = require("./routes/post");
+const commentRoutes = require("./routes/comment");
+const adminRoutes = require("./routes/admin");
+const path = require("path");
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -37,5 +52,6 @@ app.use(express.json());
 app.use("/api/auth", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/post", commentRoutes);
+app.use("/api/admin", adminRoutes);
 
 module.exports = app;

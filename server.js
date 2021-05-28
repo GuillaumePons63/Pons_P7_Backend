@@ -4,7 +4,7 @@ const app = require("./app");
 
 // fonction necessaire au fonctionnement du serveur
 const normalizePort = (val) => {
-  const port = parseInt(val, 10);
+const port = parseInt(val, 10);
 
   if (isNaN(port)) {
     return val;
