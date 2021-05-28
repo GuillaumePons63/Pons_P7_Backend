@@ -18,8 +18,4 @@ Post.hasMany(Comment, { onDelete: "cascade" });
 
 Comment.belongsTo(Post);
 
-// Comment.sync()
-//   .then(() => console.log("Comment créées"))
-//   .catch((error) => console.log(error));
-
 module.exports = Comment;

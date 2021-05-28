@@ -29,8 +29,4 @@ const User = sequelize.define("user", {
   },
 });
 
-// User.sync()
-//   .then(() => console.log("Utilisateurs créées"))
-//   .catch((error) => console.log(error));
-
 module.exports = User;

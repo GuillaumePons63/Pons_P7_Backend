@@ -17,12 +17,8 @@ const Post = sequelize.define("post", {
   },
 });
 
-Post.belongsTo(User);
+Post.belongsTo(User, { onDelete: "cascade" });
 
-User.hasMany(Post);
-
-// Post.sync()
-//   .then(() => console.log("Post créées"))
-//   .catch((error) => console.log(error));
+User.hasMany(Post, { onDelete: "cascade" });
 
 module.exports = Post;
