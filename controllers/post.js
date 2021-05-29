@@ -1,14 +1,17 @@
+// Déclaration des constantes
 const { Sequelize } = require("sequelize");
 const Post = require("../models/post");
 const User = require("../models/user");
 const fs = require("fs");
 
+// Fonctions
 exports.createPost = (req, res, next) => {
   const postObject = JSON.parse(req.body.body);
   Post.create({
     post: postObject.post,
     userId: userIdFromToken,
     title: postObject.title,
+    altText: postObject.altText,
     imageUrl: `${req.protocol}://${req.get("host")}/images/${
       req.files[0].filename
     }`,

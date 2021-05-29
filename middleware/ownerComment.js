@@ -1,4 +1,4 @@
-// utilisation du modèle sequelize présent dans models/post.js
+// Permet de vérifier si l'utilisateur est propriétaire du commentaire
 const Comment = require("../models/comment");
 
 module.exports = (req, res, next) => {

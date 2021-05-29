@@ -1,8 +1,10 @@
+// Déclaration des constantes
 const { Sequelize } = require("sequelize");
 const Post = require("../models/post");
 const User = require("../models/user");
 const Comment = require("../models/comment");
 
+// Fonctions
 exports.createComment = (req, res, next) => {
   Comment.create({
     comment: req.body.comment,

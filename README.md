@@ -5,11 +5,18 @@ Ce projet est prévu pour tourner avec nodeJs et une base de données mysql. Afi
 Vous devez donc créer un fichier .env avec ces informations :
 
 cryptKey=<String>
+
 nameDb=Groupomania
+
 userDb=<NomUtilisateurBDD>
-passwordDb=<MotDePasseBDD
+
+passwordDb=<MotDePasseBDD>
+
 tokenKey=<String>
+
 hmacKey=<String>
+
+vous devez egalement un dossier "images" dans le projet
 
 Au premier lancement, vous devez executer la commande "npm install".
 

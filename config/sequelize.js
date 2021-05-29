@@ -1,3 +1,4 @@
+// Permet la connection à la base MLysql pour enregistrer les models
 const { Sequelize } = require("sequelize");
 
 module.exports = new Sequelize(

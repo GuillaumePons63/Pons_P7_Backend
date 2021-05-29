@@ -2,6 +2,8 @@ const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const HmacSHA256 = require("crypto-js/hmac-sha256");
+const Post = require("../models/post");
+const fs = require("fs");
 
 exports.createUser = (req, res, next) => {
   let mail = HmacSHA256(req.body.email, process.env.hmacKey).toString();
@@ -41,6 +43,7 @@ exports.connectUser = (req, res, next) => {
           }
           res.status(200).json({
             userId: user.id,
+            isAdmin: user.isAdmin,
             token: jwt.sign({ id: user.id }, process.env.tokenKey, {
               expiresIn: "24h",
             }),
@@ -48,7 +51,7 @@ exports.connectUser = (req, res, next) => {
         })
         .catch((error) => res.status(500).json({ error }));
     })
-    .catch((error) => res.status(500).json({ error }));
+    .catch((error) => res.status(404).json({ error }));
 };
 
 exports.getAllUser = (req, res, next) => {
@@ -58,9 +61,22 @@ exports.getAllUser = (req, res, next) => {
 };
 
 exports.deleteUser = (req, res, next) => {
-  User.destroy({
-    where: { id: req.params.id },
+  Post.findAll({
+    where: { userId: req.params.id },
   })
-    .then(() => res.status(201).json({ message: "utilisateur supprimé" }))
+    .then((post) => {
+      for (let i = 0; i < post.length; i++) {
+        let filename = post[i].imageUrl.split("/images/")[1];
+        console.log(filename);
+        fs.unlink(`images/${filename}`, () => {
+          console.log("supprimé");
+        });
+      }
+      User.destroy({
+        where: { id: req.params.id },
+      })
+        .then(() => res.status(201).json({ message: "utilisateur supprimé" }))
+        .catch((error) => res.status(500).json({ error }));
+    })
     .catch((error) => res.status(500).json({ error }));
 };

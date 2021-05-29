@@ -1,3 +1,4 @@
+//Permet de vérifier si l'utilisateur a des droits d'administration
 const User = require("../models/user");
 
 module.exports = (req, res, next) => {
