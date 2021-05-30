@@ -58,27 +58,10 @@ exports.deletePost = (req, res, next) => {
 };
 
 exports.modifyPost = (req, res, next) => {
-  const postObject = JSON.parse(req.body.body);
-  Post.findOne({
-    where: {
-      id: req.params.id,
-    },
-  }).then((post) => {
-    const filenameOld = post.imageUrl.split("/images/")[1];
-    fs.unlink(`images/${filenameOld}`, (error) => {
-      if (error) {
-        res.status(400).json({ error });
-      }
-    });
-  });
   Post.update(
     {
-      title: postObject.title,
-      post: postObject.post,
-      imageUrl: `${req.protocol}://${req.get("host")}/images/${
-        req.files[0].filename
-      }`,
-      altText: postObject.alText,
+      title: req.body.title,
+      post: req.body.post,
     },
     {
       where: {

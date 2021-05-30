@@ -1,4 +1,4 @@
-// utilisation du modèle sequelize présent dans models/post.js
+// Permet de vérifier si l'utilisateur est propriétaire du post
 const Post = require("../models/post");
 
 module.exports = (req, res, next) => {
