@@ -11,9 +11,9 @@ const Comment = sequelize.define("comment", {
 });
 
 // Pour la création des foreign Key
-Comment.belongsTo(User);
+Comment.belongsTo(User, { onDelete: "cascade" });
 User.hasMany(Comment, { onDelete: "cascade" });
 Post.hasMany(Comment, { onDelete: "cascade" });
-Comment.belongsTo(Post);
+Comment.belongsTo(Post, { onDelete: "cascade" });
 
 module.exports = Comment;
