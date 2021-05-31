@@ -11,7 +11,6 @@ module.exports = (req, res, next) => {
     } else {
       // Déclaration de userIdFromToken qui est utilisé dans le middleware owner
       userIdFromToken = userId;
-      console.log(userIdFromToken.isAdmin);
       next();
     }
   } catch (error) {
