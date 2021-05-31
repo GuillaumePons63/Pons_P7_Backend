@@ -22,3 +22,5 @@ Au premier lancement, vous devez executer la commande "npm install".
 
 La commande "npm start" permet de lancer le projet avec les variables d'envirronnement
 .
+
+La base de données est fournit dans le dossier base de données. Elle est vide. Il est possible de donner à un compte des droits d'administration en allant dans la table users et en changeant isAdmin de 0 à 1.

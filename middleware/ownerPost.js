@@ -1,5 +1,6 @@
 // Permet de vérifier si l'utilisateur est propriétaire du post
 const Post = require("../models/post");
+const User = require("../models/user");
 
 module.exports = (req, res, next) => {
   Post.findOne({
@@ -10,7 +11,17 @@ module.exports = (req, res, next) => {
       if (userIdFromToken === post.userId) {
         next();
       } else {
-        res.status(401).json({ error });
+        User.findOne({
+          where: { id: userIdFromToken },
+        })
+          .then((user) => {
+            if (user.isAdmin) {
+              next();
+            } else {
+              res.status(401).json({ error });
+            }
+          })
+          .catch((error) => res.status(401).json({ error }));
       }
     })
     .catch((error) => res.status(401).json({ error }));
